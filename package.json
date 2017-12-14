@@ -1,0 +1,26 @@
+{
+  "name": "assigment",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yeffrydiaz/javascript-essentials.git"
+  },
+  "author": "yeff",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "bulma": "^0.6.1",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2"
+  },
+  "devDependencies": {
+    "node-sass": "^4.7.2",
+    "sass-loader": "^6.0.6",
+    "webpack": "^3.10.0"
+  }
+}
