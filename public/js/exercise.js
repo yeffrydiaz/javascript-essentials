@@ -59,7 +59,7 @@ function createArrSumHtmlComp(){
 }
 
 function arrSum(arr){
- var sum=0;
+ let sum=0;
   for(var numb in arr){
    if(arr[numb]){
     sum += arr[numb];
@@ -156,11 +156,13 @@ doc.querySelector("#getRandUserAXIOS")
 
 // acall//////////////////	
 function acallrandomUser(){
- acall({
+ /*acall({
   url:randomUserAPIUrl,
    dataType:"json",
-   ok:randomUserSuccess
-});
+  // ok:randomUserSuccess
+})*/
+acall(randomUserAPIUrl)
+.then(randomUserSuccess);
 }
 
 //fetch ///////////////////
@@ -1107,43 +1109,44 @@ function myAsyncFunction(url) {
 }
 */
 
-//acall///////////////
+/////////////////
 function acall(obj) {	
- let asyncr = obj.asyn || true,
-	   method = obj.method || "GET",
-	      url = obj.url,
-	 datasend;
+ return new Promise((resolve,reject) => {
+  let asyncr = obj.asyn || true,
+	    method = obj.method || "GET",
+			 dType = obj.dataType || null,
+	       url = obj.url || obj,
+	  datasend = '';
   if(obj.data){
 	  if(typeof obj.data === 'string'){
 	    datasend = obj.data;			  
-	    }else{
-		  var str = "";
-       for (var prop in obj.data) {
+	   }else{
+		  let str = "";
+       for (let prop in obj.data) {
          if(!obj.data.hasOwnProperty(prop)){continue;}
           str += prop + "=" + obj.data[prop] + "&";	 
          }
 		    datasend = str.slice(0,-1);		   	
-	      }		
-		  if(method === "GET"){
-		  url = url+"?"+datasend;  
-		  }	
-    }else{
-	   datasend = '';
+	      }	
+		  if(method === "GET"){ url+"?"+datasend } 
       }
       let xhr = new XMLHttpRequest();	   
 	       xhr.onreadystatechange = function(){
-	        if (xhr.readyState === 4 && 
-							(xhr.status === 200 || xhr.status === 201) ){ 
-	         if(obj.dataType==="json"){
-			       obj.ok(JSON.parse(xhr.responseText));	    
-	         }else{
-		        obj.ok(xhr.responseText);
-	        }
-         }
-       };
-	  xhr.open(method,url,asyncr);
-    if(method==="POST" || method==="PUT"){
-		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	 }
- xhr.send(datasend);
+	       if (xhr.readyState === 4 && 
+						(xhr.status === 200 || xhr.status === 201) ){ 			     
+						let respJson = JSON.parse(xhr.responseText);
+			       if(dType==="json"){
+			        if(obj.ok){obj.ok(respJson);}	    
+	           }else{
+		          if(obj.ok){obj.ok(xhr.responseText);}	
+	           }	
+					resolve(respJson);
+			 		}
+        };
+	     xhr.open(method,url,asyncr);
+     if(method==="POST" || method==="PUT"){
+		 xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	  }
+   xhr.send(datasend);
+  });	       
 }
