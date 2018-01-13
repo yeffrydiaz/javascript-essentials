@@ -1,22 +1,22 @@
 var doc              = document,
-	  win              = window,
+    win              = window,
     randomUserAPIUrl = 'https://randomuser.me/api/';
 
- createIsIntegerHtmlComp();
-  createArrSumHtmlComp();
-   createFindIndexHtmlComp();
+    createIsIntegerHtmlComp();
+    createArrSumHtmlComp();
+    createFindIndexHtmlComp();
     createCountDownHtmlComp();
-     createBitcoinHtmlComp();
-      createRandomUserHtmlComp();
-       createfEachDoubleValuesHtmlComp();
-        createEvenValuesValuesHtmlComp();
-         createshowFirstAndLastHtmlComp();
-          createaddKeyAndValueHtmlComp();
-           createvowelCountHtmlComp();
-            createmapDoubleValuesHtmlComp();
+    createBitcoinHtmlComp();
+    createRandomUserHtmlComp();
+    createfEachDoubleValuesHtmlComp();
+    createEvenValuesValuesHtmlComp();
+    createshowFirstAndLastHtmlComp();
+    createaddKeyAndValueHtmlComp();
+    createvowelCountHtmlComp();
+    createmapDoubleValuesHtmlComp();
 
 win.onload = function(){
-acallrandomUser();  
+ aqueryrandomUser();  
  findIndex(arr);
   countDown(3);
  setInterval(bitCoinPrice,5000);
@@ -27,7 +27,23 @@ acallrandomUser();
 //is Integer////////////
 function createIsIntegerHtmlComp(){
  var title = 'Check Integer Number';
-  var body = '<input type="text" id="intNumb" class="input is-small is-primary" name="Intnumb" val="" placeholder="Enter Number"><button id="sendIntNumb" class="button is-small is-primary">Check</button><div id="isInteger" class="boxContent"></div>';  
+  var body = 
+    `<input 
+        type="text" 
+        id="intNumb" 
+        class="input is-small is-primary" 
+        name="Intnumb" val="" 
+        placeholder="Enter Number"
+        >
+    <button 
+        id="sendIntNumb" 
+        class="button is-small is-primary"
+        >Check
+        </button>
+    <div 
+        id="isInteger" 
+        class="boxContent"
+    ></div>`;  
  comp(title,body);
 }
 
@@ -143,26 +159,62 @@ function bitCoinPrice(){
 //get random User/////////////////////////////
 function createRandomUserHtmlComp(){
  var title = 'Random User';
-  var body = '<div id="ramdomUser" class="boxContent"><div class="user-profile"><img id="avatar" src="" /><div>Name: <span id="fullname"></span></div><div>Username: <span id="username"></span></div><div class="description"><div>Email: <span id="email"></span></div><div>City: <span id="city"></span></div></div><button id="getRandUserAcall" class="button is-success">acall</button><button id="getRandUserFecth" class="button is-success">fecth</button><button id="getRandUserAXIOS" class="button is-success">axios</button></div></div>';  
+  var body = 
+     `<div
+        id="ramdomUser" 
+        class="boxContent"
+        >
+       <div 
+        class="user-profile"
+        >
+        <img 
+          id="avatar" 
+          src=""
+        />
+        <div>
+         Name: <span id="fullname"></span>
+        </div>
+        <div>
+          Username: <span id="username"></span>
+        </div>
+        <div class="description"><div>
+         Email: <span id="email"></span>
+        </div>
+        <div>
+          City: <span id="city"></span>
+        </div>
+        </div>
+        <button 
+          id="getRandUseraquery" 
+          class="button is-success"
+        >aquery
+        </button>
+        <button 
+          id="getRandUserFecth" 
+          class="button is-success"
+        >fecth
+        </button>
+        <button 
+          id="getRandUserAXIOS" 
+          class="button is-success"
+        >axios
+         </button>
+        </div>
+    </div>`;  
  comp(title,body);
 }
 
-doc.querySelector("#getRandUserAcall")
-   .onclick = acallrandomUser;
+doc.querySelector("#getRandUseraquery")
+   .onclick = aqueryrandomUser;
 doc.querySelector("#getRandUserFecth")
    .onclick = fetchRandomUser;
 doc.querySelector("#getRandUserAXIOS")
    .onclick = axiosRandomUser;
 
-// acall//////////////////	
-function acallrandomUser(){
- /*acall({
-  url:randomUserAPIUrl,
-   dataType:"json",
-  // ok:randomUserSuccess
-})*/
-acall(randomUserAPIUrl)
-.then(randomUserSuccess);
+// aquery//////////////////	
+function aqueryrandomUser(){
+ aquery(randomUserAPIUrl)
+ .then(randomUserSuccess);
 }
 
 //fetch ///////////////////
@@ -1089,11 +1141,12 @@ function comp(title,body){
 //first word to Upper///
 function firstWordtoUpper(str) {
 return str
-    .toLowerCase()
-    .split(' ')
-    .map(function(word) {
-      return word[0].toUpperCase() + word.substr(1);
-    })
+      .toLowerCase()
+     .split(' ')
+    .map( word => 
+         word[0].toUpperCase() +
+        word.substr(1) 
+       )
  .join(' ');
 }
 
@@ -1109,44 +1162,44 @@ function myAsyncFunction(url) {
 }
 */
 
-/////////////////
-function acall(obj) {	
- return new Promise((resolve,reject) => {
-  let asyncr = obj.asyn || true,
-	    method = obj.method || "GET",
-			 dType = obj.dataType || null,
-	       url = obj.url || obj,
-	  datasend = '';
-  if(obj.data){
-	  if(typeof obj.data === 'string'){
-	    datasend = obj.data;			  
-	   }else{
-		  let str = "";
-       for (let prop in obj.data) {
-         if(!obj.data.hasOwnProperty(prop)){continue;}
-          str += prop + "=" + obj.data[prop] + "&";	 
-         }
-		    datasend = str.slice(0,-1);		   	
-	      }	
-		  if(method === "GET"){ url+"?"+datasend } 
-      }
-      let xhr = new XMLHttpRequest();	   
-	       xhr.onreadystatechange = function(){
-	       if (xhr.readyState === 4 && 
-						(xhr.status === 200 || xhr.status === 201) ){ 			     
-						let respJson = JSON.parse(xhr.responseText);
-			       if(dType==="json"){
-			        if(obj.ok){obj.ok(respJson);}	    
-	           }else{
-		          if(obj.ok){obj.ok(xhr.responseText);}	
-	           }	
-					resolve(respJson);
-			 		}
-        };
-	     xhr.open(method,url,asyncr);
-     if(method==="POST" || method==="PUT"){
-		 xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	  }
-   xhr.send(datasend);
-  });	       
+function aquery(r) {
+ return new Promise((resolve, reject) => {
+    let asyncr   = r.asyn || true,
+        method   = r.method || r.type || "GET",
+        dType    = r.dataType || null,
+        url      = r.url || r,
+        datasend = '';
+    if (r.data) {
+        if (typeof r.data === 'string') {
+            datasend = r.data;
+        } else {
+            let str = "";
+            for (let prop in r.data) {
+                if (!r.data.hasOwnProperty(prop)) {
+                    continue;
+                }
+                str += prop + "=" + r.data[prop] + "&";
+            }
+            datasend = str.slice(0, -1);
+        }
+        url = method === "GET" ? url + "?" + datasend : url;
+    }
+    const xhr = new XMLHttpRequest();
+    xhr.onload = ()=> {
+     const resp = dType === "json" ?
+        JSON.parse(xhr.responseText) :
+         xhr.responseText;
+      if (r.success) r.success(resp);
+     resolve(JSON.parse(xhr.responseText));
+    };
+    xhr.onerror = ()=> {
+        console.log("Query Error");
+        reject(xhr.statusText);
+    };
+    xhr.open(method, url, asyncr);
+    if (method === "POST" || method === "PUT") {
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    }
+    xhr.send(datasend);
+  });
 }
