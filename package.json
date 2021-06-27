@@ -14,7 +14,7 @@
   "author": "yeff",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.17.1",
+    "axios": "^0.21.1",
     "bulma": "^0.6.1",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
